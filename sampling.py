@@ -8,6 +8,13 @@ class Synthesis():
     def sample(self, module, num_iter=10, learning_rate=1e-2):
         assert isinstance(module.X, torch.nn.Parameter), 'Expected X to be an instance of torch.nn.Parameter';
         
+        # we do not want to create a graph and do backprop on net parameters, since we need only gradient of X
+        for name, param in module.named_parameters():
+            if name != 'X':
+                param.requires_grad = False;
+            else:
+                param.requires_grad = True;
+        
         module.X.data = module.X.data.normal_(mean=0, std=self.init_std);
         opt = torch.optim.SGD([module.X], lr=learning_rate);
         
@@ -21,5 +28,12 @@ class Synthesis():
                 module.X.data += torch.empty_like(module.X.data).normal_(mean=0, std=self.noise_grad_std);
             
             opt.step();
-            
+        
+        # we want to perform the training of the net and do not need to backprop through X
+        for name, param in module.named_parameters():
+            if name != 'X':
+                param.requires_grad = True;
+            else:
+                param.requires_grad = False;
+                
         return module.X.data;
