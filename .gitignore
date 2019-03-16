@@ -127,6 +127,7 @@ dmypy.json
 
 # dataset files
 data/
+MNIST/
 
 # drafts and rubbish
 my_rubbish_not_to_view.ipynb
