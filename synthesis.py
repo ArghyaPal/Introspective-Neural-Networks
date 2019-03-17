@@ -20,7 +20,7 @@ class Synthesis():
     def sample(self, module, num_iter=10, learning_rate=1e-2, add_noise=True):
         assert isinstance(module.X, torch.nn.Parameter), 'Expected X to be an instance of torch.nn.Parameter';
         
-        model.train(False);
+        module.train(False);
         
         # we do not want to create a graph and do backprop on net parameters, since we need only gradient of X
         for name, param in module.named_parameters():
@@ -45,7 +45,7 @@ class Synthesis():
                 std_noise *= 0.9; 
             opt.step()
             
-        model.train(True);
+        module.train(True);
         
         for name, param in module.named_parameters():
             if name != 'X':
