@@ -51,7 +51,7 @@ class MnistDataset(Dataset):
         pass;
     
 def get_data_loaders(train_batch_size, val_batch_size, test_batch_size, train_size='all'):
-    MNIST(download=False, train=True, root=".").train_data.float();
+    MNIST(download=True, train=True, root=".").train_data.float();
 
     train_loader = DataLoader(MnistDataset(root_dir='', training='train', train_samples=train_size),
                               batch_size=train_batch_size, shuffle=True);
