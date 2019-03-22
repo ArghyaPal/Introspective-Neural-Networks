@@ -9,9 +9,9 @@ class MnistDataset(Dataset):
         self.fakes = [];
         
         if training == 'train' or training == 'validate':
-            x, y = torch.load(root_dir + 'processed/training.pt');
+            x, y = torch.load(root_dir + 'MNIST/processed/training.pt');
         else:
-            x, y = torch.load(root_dir + 'processed/test.pt');
+            x, y = torch.load(root_dir + 'MNIST/processed/test.pt');
         if train_samples == 'all' and training == 'train':
             for i in range(50000):
                 self.imgs.append(x[i, ...].float()/255);
